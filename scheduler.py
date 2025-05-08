@@ -54,7 +54,7 @@ class RoundRobinScheduler:
             if self.ready_queue:
                 process = self.ready_queue.pop(0)
                 
-                if not process.start_time:
+                if process.start_time == None:
                     process.start_time = self.time
                 
                 increment = min(process.remaining_time, self.time_quantum)
