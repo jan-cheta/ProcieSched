@@ -11,7 +11,7 @@ def main():
         Process(process_id=5, arrival_time=4, burst_time=4),
     ]
     
-    scheduler = RoundRobinScheduler(process_list, 3)
+    scheduler = RoundRobinScheduler(process_list, 5)
     result = scheduler.get_dataframe()
     
     print(result['attr'])
