@@ -120,4 +120,4 @@ def create_process_dataframes(process_list):
             })
     gantt_df = pd.DataFrame(gantt_data).sort_values('Start')
     
-    return {'attr': attributes_df.to_json(), 'gantt': gantt_df.to_json()}
+    return {'attr': attributes_df, 'gantt': gantt_df}
