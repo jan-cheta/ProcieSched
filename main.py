@@ -21,8 +21,8 @@ def main():
     # result_df = post_request_sample_priority(process_list=process_list, is_preemptive=False)
     
     # Print the result
-    print(result_df['attr'])
-    print(result_df['gantt'])
+    # print(result_df['attr'])
+    # print(result_df['gantt'])
 
 def post_request_sample_roundrobin(**kargs):
     process_list = kargs.get("process_list", [])

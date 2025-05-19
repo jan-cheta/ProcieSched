@@ -13,24 +13,6 @@ class Process:
         self.waiting_time = None
         self.response_time = None
         self.time_segments = []
-        
-    def __repr__(self) -> str:
-        return (
-            f"Process("
-            f"id={self.process_id}, "
-            f"arrival={self.arrival_time}, "
-            f"burst={self.burst_time}, "
-            f"remaining={self.remaining_time}, "
-            f"completion={self.completion_time}, "
-            f"start={self.start_time}, "
-            f"turnaround={self.turnaround_time}, "
-            f"waiting={self.waiting_time}, "
-            f"response={self.response_time}, "
-            f"segments={self.time_segments}"
-            f")"
-        )
-
-
 
 class RoundRobinScheduler:
     def __init__(self, process_list: list[Process], time_quantum):
@@ -80,6 +62,7 @@ class RoundRobinScheduler:
         data = self._schedule()
         return create_process_dataframes(data)
 
+
 class PriorityScheduler:
     def __init__(self, process_list: list[Process], is_preemptive: bool):
         self.process_list = sorted(process_list, key=lambda process: process.arrival_time)
@@ -125,8 +108,7 @@ class PriorityScheduler:
                     process.response_time = process.start_time - process.arrival_time
                     self.terminated_queue.append(process)
             else:
-                self.time += 1
-                
+                self.time += 1    
         return sorted(self.terminated_queue, key=lambda process: process.process_id)
     
     def _non_preemptive(self):
@@ -163,7 +145,6 @@ class PriorityScheduler:
                     self.terminated_queue.append(process)
             else:
                 self.time += 1
-                
         return sorted(self.terminated_queue, key=lambda process: process.process_id)
     
     def get_dataframe(self):
@@ -171,26 +152,10 @@ class PriorityScheduler:
             data = self._preemptive()
         else:
             data = self._non_preemptive()
-
         return create_process_dataframes(data)
 
 
-        
-        
-
 def create_process_dataframes(process_list):
-    """
-    Creates two DataFrames:
-    1. Process attributes (metrics like CT, TAT, WT)
-    2. Gantt chart segments (time intervals for visualization)
-    
-    Args:
-        process_list: List of Process objects
-        
-    Returns:
-        (attributes_df, gantt_df) tuple of DataFrames
-    """
-    # DataFrame 1: Process Attributes
     attributes_data = []
     for p in process_list:
         attributes_data.append({
@@ -206,7 +171,6 @@ def create_process_dataframes(process_list):
         })
     attributes_df = pd.DataFrame(attributes_data)
     
-    # DataFrame 2: Gantt Chart Segments
     gantt_data = []
     for p in process_list:
         for start, end in p.time_segments:
